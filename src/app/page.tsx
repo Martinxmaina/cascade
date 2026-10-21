@@ -1,69 +1,28 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import Link from "next/link";
+import { redirect } from "next/navigation";
+import { getUser } from "@/lib/auth";
+import { Wash, Drop } from "@/components/watercolour/Watercolour";
 
-export default function Home() {
+// Placeholder landing page. The full landing page is a later phase.
+export default async function Landing() {
+  if (await getUser()) redirect("/home");
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>
-            To get started, edit the{" "}
-            <code className={styles.code}>page.tsx</code> file.
-          </h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="auth-wrap">
+      <Wash style={{ width: 900, top: -160, right: -160 }} tone={200} />
+      <div style={{ maxWidth: 640, position: "relative" }}>
+        <div className="logo" style={{ padding: 0, marginBottom: 24 }}>
+          <Drop /> Cascade
         </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        <h1>Tell us what you sell. Get the people who&apos;ll buy it.</h1>
+        <p className="muted" style={{ fontSize: 17, margin: "16px 0 24px" }}>
+          Cascade reads your website, writes your ideal customer profile, and finds verified
+          decision makers by trying five email providers until one hits.
+        </p>
+        <div className="row" style={{ gap: 12 }}>
+          <Link className="btn" href="/signup">Start free</Link>
+          <Link className="btn secondary" href="/login">Log in</Link>
         </div>
-      </main>
-    </div>
+      </div>
+    </main>
   );
 }
